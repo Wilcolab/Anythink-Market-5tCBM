@@ -4,7 +4,7 @@ The Anythink Market backend is Node web app written with [Express](https://expre
 
 ## Getting started
 
-To start the app use: `./start.sh` from the backend directory.
+To start the app use: `yarn install` and `yarn start`.
 
 Make sure your DB is up and running.
 
