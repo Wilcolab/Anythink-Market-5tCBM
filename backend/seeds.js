@@ -5,21 +5,15 @@ require('./models/Item');
 var Item = mongoose.model('Item');
 var User = mongoose.model('User');
 
-const itemsToPopulate = [
-    { title: 'Item 1', description: 'This is item1 description'},
-    { title: 'Item 2', description: 'This is item2 description'},
-    { title: 'Item 3', description: 'This is item3 description'},
-    { title: 'Item 4', description: 'This is item4 description'},
-];
-
 async function populateItemsTable() {
+    const itemssCount = 105;
     console.log('Populating Items');
 
     const user = new User({ username: 'test', email: 'test@wilcohq.com' });
     await user.save();
 
-    for (const item of itemsToPopulate) {
-        var newItem = new Item(item);
+    for (var i=1; i<itemssCount; i++) {
+        var newItem = new Item({ title: `Item ${i}`, description: `This is item ${i} description` });
         newItem.seller = user;
         await newItem.save()
     }
