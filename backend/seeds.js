@@ -12,22 +12,35 @@ const itemsToPopulate = [
     { title: 'Item 4', description: 'This is item4 description'},
 ];
 
-async function populateDb() {
-            console.log('Populating data');
+async function populateItemsTable() {
+    console.log('Populating Items');
 
-            const user = new User({ username: 'test', email: 'test@wilcohq.com' });
-            await user.save();
+    const user = new User({ username: 'test', email: 'test@wilcohq.com' });
+    await user.save();
 
-            for (const item of itemsToPopulate){
-                var newItem = new Item(item);
-                newItem.seller = user;
-                await newItem.save()
-            }
-            console.log('Done populating data');
+    for (const item of itemsToPopulate) {
+        var newItem = new Item(item);
+        newItem.seller = user;
+        await newItem.save()
+    }
+}
+
+async function populateUsersTable() {
+    const usersCount = 105;
+    console.log('Populating users');
+
+    for (var i=1; i<usersCount; i++){
+        const user = new User({ username: `TestUser${i}`, email: `TestUser${i}@wilcohq.com` });
+        await user.save();
+    }
 }
 
 mongoose.connect(process.env.MONGODB_URI);
-populateDb().then(()=> {
-    console.log('Done');
+populateItemsTable().then(()=> {
+    console.log('Done populating Items');
+});
+
+populateUsersTable().then(()=> {
+    console.log('Done populating users');
     process.exit();
 });
