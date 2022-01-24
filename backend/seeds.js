@@ -12,22 +12,22 @@ const itemsToPopulate = [
     { title: 'Item 4', description: 'This is item4 description'},
 ];
 
-function populateDb() {
-    User.findOne({ role: 'user' })
-        .then(function(user) {
-            if (!user) {
-                console.log('User not found');
-            }
-
+async function populateDb() {
             console.log('Populating data');
-            itemsToPopulate.map( item => {
+
+            const user = new User({ username: 'test', email: 'test@wilcohq.com' });
+            await user.save();
+
+            for (const item of itemsToPopulate){
                 var newItem = new Item(item);
                 newItem.seller = user;
-                newItem.save();
-            });
+                await newItem.save()
+            }
             console.log('Done populating data');
-        });
 }
 
 mongoose.connect(process.env.MONGODB_URI);
-populateDb();
+populateDb().then(()=> {
+    console.log('Done');
+    process.exit();
+});
