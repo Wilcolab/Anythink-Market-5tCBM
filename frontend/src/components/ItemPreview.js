@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import agent from "../agent";
 import { connect } from "react-redux";
 import { ITEM_FAVORITED, ITEM_UNFAVORITED } from "../constants/actionTypes";
-import placeholder from "../imgs/placeholder.png";
 
 const mapDispatchToProps = (dispatch) => ({
   favorite: (slug) =>
@@ -34,10 +33,11 @@ const ItemPreview = (props) => {
     <div
       className="card bg-dark border-light p-3"
       style={{ borderRadius: "20px" }}
+      id={`item_${item.slug}`}
     >
       <img
         alt="item"
-        src={item.image || placeholder}
+        src={item.image}
         className="card-img-top item-img"
         style={{ borderRadius: "20px" }}
       />
@@ -46,7 +46,7 @@ const ItemPreview = (props) => {
           <h3 className="card-title">{item.title}</h3>
           <p className="card-text crop-text-3">{item.description}</p>
         </Link>
-        <div className="d-flex flex-row align-items-center pt-2">
+        <div className="d-flex flex-row align-items-center pt-2 item-footer">
           <Link to={`/@${item.seller.username}`} className="flex-grow-1">
             <img
               src={item.seller.image}
@@ -55,7 +55,7 @@ const ItemPreview = (props) => {
             />
           </Link>
           <button className="btn btn-outline-secondary" onClick={handleClick}>
-            <i className="ion-heart" /> {item.favoritesCount}
+            <i className="ion-heart"></i> {item.favoritesCount}
           </button>
         </div>
       </div>
